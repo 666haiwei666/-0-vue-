@@ -37,6 +37,7 @@ module.exports = {
         test: /\.(jpg|jpeg|png|svg)$/,
         loader: "url-loader",
         options: {
+          esModule: false,
           name: "[name].[ext]",
           limit: 2048 //当文件小于 2048byte 时, 以 base64 打包到 js 中, 当文件大于 2048byte 时, 使用 file-loader 打包
         }

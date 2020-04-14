@@ -2,7 +2,7 @@
 <template>
   <div class="">
     <h1>hello world 热加载543222</h1>
-    <!-- <img :src="img" alt=""> -->
+    <img src="../assets/images/1.png" alt="">
     <!-- // TODO 图片路径显示问题 -->
     <input type="text" v-model="content" />
     <button @click="addTodo">添加</button>
