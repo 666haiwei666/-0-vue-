@@ -42,6 +42,12 @@ module.exports = {
           limit: 2048 //当文件小于 2048byte 时, 以 base64 打包到 js 中, 当文件大于 2048byte 时, 使用 file-loader 打包
         }
       },
+
+      // 加载字体
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ["file-loader"]
+      },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
@@ -50,7 +56,20 @@ module.exports = {
         test: /\.styl(us)?$/,
         use: ["style-loader", "css-loader", "postcss-loader", "stylus-loader"]
       },
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      },
+      //数据文件引入
+      {
+        test: /\.(csv|tsv)$/,
+        use: ["csv-loader"]
+      },
+      {
+        test: /\.xml$/,
+        use: ["xml-loader"]
+      }
     ]
   },
   plugins: [

@@ -15,7 +15,8 @@
 <script>
 import img from "../assets/images/1.png";
 import "../assets/styles/global.styl";
-// import '../assets/styles/test.css'
+import '../assets/styles/test.css'
+import JSON from '../assets/fireworks.json';
 export default {
   components: {},
   data() {
@@ -37,6 +38,7 @@ export default {
   created() {
     console.log(1111111111111111);
     console.log(img)
+    console.log(JSON)
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
