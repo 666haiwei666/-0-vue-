@@ -1,9 +1,9 @@
 <!--  -->
 <template>
-  <div class="">
+  <div class>
+    <children />
     <h1>hello world 热加载543222</h1>
-    <img src="../assets/images/1.png" alt="">
-    <!-- // TODO 图片路径显示问题 -->
+    <img src="../assets/images/1.png" alt />
     <input type="text" v-model="content" />
     <button @click="addTodo">添加</button>
     <ul>
@@ -13,40 +13,44 @@
 </template>
 
 <script>
-import img from "../assets/images/1.png";
-import "../assets/styles/global.styl";
-import '../assets/styles/test.css'
-import JSON from '../assets/fireworks.json';
-export default {
-  components: {},
-  data() {
-    return {
-      todoData: ["todo1", "todo2", "todo3"],
-      content: ""
-    };
-  },
-  computed: {},
-  watch: {},
-  methods: {
-    addTodo() {
-      if (this.content === "") return;
+  import img from '../assets/images/1.png'
+  import '../assets/styles/global.styl'
+  import '../assets/styles/test.css'
+  import JSON from '../assets/fireworks.json'
+  import { cube } from './math'
+  import children from './children.vue'
+  export default {
+    components: {
+      children
+    },
+    data() {
+      return {
+        todoData: ['todo1', 'todo2', 'todo3'],
+        content: ''
+      }
+    },
+    computed: {},
+    watch: {},
+    methods: {
+      addTodo() {
+        if (this.content === '') return
 
-      this.todoData.push(this.content);
-      this.content = "";
-    }
-  },
-  created() {
-    console.log(1111111111111111);
-    console.log(img)
-    console.log(JSON)
-  },
-  //生命周期 - 挂载完成（可以访问DOM元素）
-  mounted() {},
-  activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
-};
+        this.todoData.push(this.content)
+        this.content = ''
+      }
+    },
+    created() {
+      console.log(1111111111111111)
+      console.log(img)
+      console.log(JSON)
+    },
+    //生命周期 - 挂载完成（可以访问DOM元素）
+    mounted() {},
+    activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
+  }
 </script>
 <style lang="stylus" scoped>
-h1
-  color: red;
-  transform: translate(10px,10px);
+  h1
+    color: red
+    transform: translate(10px, 10px)
 </style>

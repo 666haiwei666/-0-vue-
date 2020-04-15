@@ -4,6 +4,7 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const baseConfig = require("./webpack.base.js");
 
+
 const devConfig = {
   mode: "development",
   // devServer配置
@@ -16,6 +17,9 @@ const devConfig = {
     // 启用热模块替换
     hot: true
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [
+    new webpack.NamedModulesPlugin(), // 以便更容易查看要修补(patch)的依赖
+    new webpack.HotModuleReplacementPlugin(),
+  ]
 };
 module.exports = merge(baseConfig, devConfig);
