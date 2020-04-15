@@ -52,5 +52,18 @@
 <style lang="stylus" scoped>
   h1
     color: red
+    font-family: 'MyFont'
     transform: translate(10px, 10px)
+
+  // body
+  //   font-family: 'MyFont'
+    // background-color: red
+</style>
+<!--<style>
+  @font-face {
+    font-family: 'MyFont';
+    src: url('../assets/fonts/myfont.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+  }
 </style>

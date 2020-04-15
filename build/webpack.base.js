@@ -4,28 +4,28 @@ const webpack = require("webpack");
 
 // 引入vue-loader插件
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
-
+// 防止css和js分离
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const {
-  CleanWebpackPlugin
-} = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
   entry: {
     main: "./src/main.js",
-    first: './src/first.js',
-    second: './src/second.js',
+    first: "./src/first.js",
+    second: "./src/second.js",
     // vendor: Object.keys(packagejson.dependencies)
   },
   // 打包的出口
 
   output: {
-    filename: '[name].js',
+    filename: "[name].js",
     path: path.resolve(__dirname, "..", "dist"),
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.vue$/,
         loader: "vue-loader",
       },
@@ -52,11 +52,19 @@ module.exports = {
       // 加载字体
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: ["file-loader"],
+        use: {
+          loader: "file-loader",
+          query: {
+            name: "[name].[ext]",
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader",
+        }),
       },
       {
         test: /\.styl(us)?$/,
@@ -81,10 +89,13 @@ module.exports = {
   plugins: [
     // 请确保引入这个插件！
     new VueLoaderPlugin(),
+    // new ExtractTextPlugin("styles.css"),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./index.html",
     }),
+
+    // TODO css文件没有引入,图片，css压缩
     new webpack.optimize.SplitChunksPlugin({
       cacheGroups: {
         default: {
@@ -94,20 +105,20 @@ module.exports = {
         },
         //打包重复出现的代码
         vendor: {
-          chunks: 'initial',
+          chunks: "initial",
           minChunks: 2,
           maxInitialRequests: 5, // The default limit is too small to showcase the effect
           minSize: 0, // This is example is too small to create commons chunks
-          name: 'vendor'
+          name: "vendor",
         },
         //打包第三方类库
         commons: {
           name: "commons",
           chunks: "initial",
-          minChunks: Infinity
-        }
-      }
-    })
+          minChunks: Infinity,
+        },
+      },
+    }),
   ],
   resolve: {
     alias: {
