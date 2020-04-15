@@ -19,8 +19,6 @@ module.exports = {
     // vendor: Object.keys(packagejson.dependencies)
   },
   // 打包的出口
-  // devServer配置
-  devtool: "inline-source-map",
 
   output: {
     filename: '[name].js',
