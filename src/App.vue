@@ -14,8 +14,8 @@
 
 <script>
   import img from '../assets/images/1.png'
-  import '../assets/styles/global.styl'
-  import '../assets/styles/test.css'
+  // import "../assets/styles/global.styl";
+  import '../assets/styles/reset.css';
   import JSON from '../assets/fireworks.json'
   import { cube } from './math'
   import children from './children.vue'
@@ -49,21 +49,18 @@
     activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
   }
 </script>
-<style lang="stylus" scoped>
-  h1
-    color: red
-    font-family: 'MyFont'
-    transform: translate(10px, 10px)
 
-  // body
-  //   font-family: 'MyFont'
-    // background-color: red
-</style>
-<!--<style>
-  @font-face {
-    font-family: 'MyFont';
-    src: url('../assets/fonts/myfont.ttf') format('truetype');
-    font-weight: 600;
-    font-style: normal;
+
+<style lang="scss">
+  /* 定义变量与值 */
+  $bgcolor: lightblue;
+  $textcolor: darkblue;
+  $fontsize: 18px;
+
+  /* 使用变量 */
+  body {
+    background-color: $bgcolor;
+    color: $textcolor;
+    font-size: $fontsize;
   }
 </style>

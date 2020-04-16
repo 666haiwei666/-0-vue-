@@ -5,7 +5,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const prodConfig = {
   // 模式
-  // mode: "production",
+  mode: "production",
   devtool: "inline-source-map",
   plugins: [
     new ManifestPlugin({
@@ -23,9 +23,9 @@ const prodConfig = {
       },
     }),
     // 配置环境变量
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    })
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV': JSON.stringify('production')
+    // })
   ],
 };
 

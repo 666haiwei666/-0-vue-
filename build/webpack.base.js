@@ -8,9 +8,14 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const {
+  CleanWebpackPlugin
+} = require("clean-webpack-plugin");
 
 module.exports = {
+  performance: {
+    hints: false
+  },
   entry: {
     main: "./src/main.js",
     first: "./src/first.js",
@@ -24,21 +29,10 @@ module.exports = {
     path: path.resolve(__dirname, "..", "dist"),
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: "vue-loader",
       },
-      // 图片必须引入才会被打包  以http形式
-      // {
-      //   test: /\.(jpg|jpeg|png|svg)$/,
-      //   loader: "file-loader",
-      //   options: {   // 使文件保存原名
-      //     name: "[name].[ext]",
-      //   },
-      // },
-
-      //url-loader 直接将小图片打包以 base64 打包在 js 中, 减少 Http 请求的次数, 提高访问效率
       {
         test: /\.(jpg|jpeg|png|svg)$/,
         loader: "url-loader",
@@ -48,7 +42,6 @@ module.exports = {
           limit: 2048, //当文件小于 2048byte 时, 以 base64 打包到 js 中, 当文件大于 2048byte 时, 使用 file-loader 打包
         },
       },
-
       // 加载字体
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -67,8 +60,20 @@ module.exports = {
         }),
       },
       {
-        test: /\.styl(us)?$/,
-        use: ["style-loader", "css-loader", "postcss-loader", "stylus-loader"],
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          // 注意 1
+          fallback: {
+            loader: "style-loader"
+          },
+          use: [{
+              loader: "css-loader",
+            },
+            {
+              loader: "sass-loader"
+            }
+          ]
+        })
       },
       {
         test: /\.js$/,
@@ -89,7 +94,9 @@ module.exports = {
   plugins: [
     // 请确保引入这个插件！
     new VueLoaderPlugin(),
-    // new ExtractTextPlugin("styles.css"),
+    new ExtractTextPlugin({
+      filename: "style.css",
+    }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./index.html",
@@ -121,8 +128,9 @@ module.exports = {
     }),
   ],
   resolve: {
+    extensions: ['.js', '.vue', '.json'],
     alias: {
       vue: "vue/dist/vue.js",
-    },
-  },
+    }
+  }
 };

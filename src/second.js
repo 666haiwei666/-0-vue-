@@ -1,6 +1,6 @@
 import {
   square
-} from "./math";
+} from "./math.js";
 import $ from 'jquery'
 square(3)
 console.log($)
