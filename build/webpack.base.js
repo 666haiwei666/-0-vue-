@@ -12,7 +12,7 @@ const {
 module.exports = {
   // 打包的入口
   entry: {
-    main: "./src/main.js",
+    main: "./main.js",   //以test目录为路径
     first: './src/first.js',
     second: './src/seconds.js',
   },
