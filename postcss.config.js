@@ -1,3 +1,5 @@
 module.exports = {
-  plugins: [require("autoprefixer")]
-};
+  plugins: [
+    require('autoprefixer') // 自动补充前缀
+  ]
+}

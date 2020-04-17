@@ -1,35 +1,24 @@
 // 使用node的path模块
 const path = require("path");
-const webpack = require("webpack");
-
 // 引入vue-loader插件
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
-// 防止css和js分离
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-
-const {
-  CleanWebpackPlugin
-} = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  performance: {
-    hints: false
-  },
-  entry: {
-    main: "./src/main.js",
-    first: "./src/first.js",
-    second: "./src/second.js",
-    // vendor: Object.keys(packagejson.dependencies)
-  },
+  // 打包的入口
+  entry: "./src/main.js",
   // 打包的出口
-
   output: {
-    filename: "[name].js",
+    filename: "bundle.js",
     path: path.resolve(__dirname, "..", "dist"),
   },
+  devtool: "inline-source-map",
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.vue$/,
         loader: "vue-loader",
       },
@@ -37,50 +26,87 @@ module.exports = {
         test: /\.(jpg|jpeg|png|svg)$/,
         loader: "url-loader",
         options: {
-          esModule: false,
-          name: "[name].[ext]",
-          limit: 2048, //当文件小于 2048byte 时, 以 base64 打包到 js 中, 当文件大于 2048byte 时, 使用 file-loader 打包
-        },
-      },
-      // 加载字体
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: {
-          loader: "file-loader",
-          query: {
-            name: "[name].[ext]",
-          },
+          name: "images/[name]_[hash:7].[ext]",
+          limit: 2048,
+          // outputPath: "/images",
+          // publicPath: "/images/",
+          esModule: false, // 解决[object Module]
         },
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader",
-        }),
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // 这里可以指定一个 publicPath
+              // 默认使用 webpackOptions.output中的publicPath
+              publicPath: "../",
+            },
+          },
+          "css-loader",
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "postcss-loader",
+          },
+          {
+            loader: "less-loader",
+          },
+        ],
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          // 注意 1
-          fallback: {
-            loader: "style-loader"
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
           },
-          use: [{
-              loader: "css-loader",
-            },
-            {
-              loader: "sass-loader"
-            }
-          ]
-        })
+          {
+            loader: "postcss-loader",
+          },
+          {
+            loader: "sass-loader",
+          },
+        ],
       },
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "babel-loader",
+        test: /\.sass$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "postcss-loader",
+          },
+          {
+            loader: "sass-loader",
+          },
+        ],
       },
-      //数据文件引入
+      {
+        test: /\.styl$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "postcss-loader",
+          },
+          {
+            loader: "stylus-loader",
+          },
+        ],
+      },
       {
         test: /\.(csv|tsv)$/,
         use: ["csv-loader"],
@@ -89,48 +115,45 @@ module.exports = {
         test: /\.xml$/,
         use: ["xml-loader"],
       },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        loader: "file-loader",
+        options: {
+          name: "fonts/[name]_[hash:7].[ext]",
+        },
+      },
+      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
     ],
   },
   plugins: [
-    // 请确保引入这个插件！
-    new VueLoaderPlugin(),
-    new ExtractTextPlugin({
-      filename: "style.css",
-    }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./index.html",
     }),
-
-    // TODO css文件没有引入,图片，css压缩
-    new webpack.optimize.SplitChunksPlugin({
-      cacheGroups: {
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-        //打包重复出现的代码
-        vendor: {
-          chunks: "initial",
-          minChunks: 2,
-          maxInitialRequests: 5, // The default limit is too small to showcase the effect
-          minSize: 0, // This is example is too small to create commons chunks
-          name: "vendor",
-        },
-        //打包第三方类库
-        commons: {
-          name: "commons",
-          chunks: "initial",
-          minChunks: Infinity,
-        },
-      },
+    new MiniCssExtractPlugin({
+      filename: "assets/main.css",
     }),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.css$/g,
+      cssProcessor: require("cssnano"),
+      cssProcessorPluginOptions: {
+        preset: [
+          "default",
+          {
+            discardComments: {
+              removeAll: true,
+            },
+          },
+        ],
+      },
+      canPrint: true,
+    }),
+    // 请确保引入这个插件！
+    new VueLoaderPlugin(),
   ],
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
     alias: {
       vue: "vue/dist/vue.js",
-    }
-  }
+    },
+  },
 };

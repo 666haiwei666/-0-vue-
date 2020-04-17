@@ -1,9 +1,7 @@
-<!--  -->
-<template>
-  <div class>
-    <children />
-    <h1>hello world 热加载543222</h1>
-    <img src="../assets/images/1.png" alt />
+<!--<template>
+  <div>
+     <h1>hahhha11111</h1>
+    <h1>TodoList</h1>
     <input type="text" v-model="content" />
     <button @click="addTodo">添加</button>
     <ul>
@@ -13,54 +11,71 @@
 </template>
 
 <script>
-  import img from '../assets/images/1.png'
-  // import "../assets/styles/global.styl";
-  import '../assets/styles/reset.css';
-  import JSON from '../assets/fireworks.json'
-  import { cube } from './math'
-  import children from './children.vue'
-  export default {
-    components: {
-      children
+// import data from './assets/data/test.xml'
+export default {
+  name: 'App',
+  data() {
+    return {
+      todoData: ['todo1', 'todo2', 'todo3'],
+      content: ''
+    }
+  },
+  mounted(){
+   console.log(1111111)
+   this.test()
+  },
+  methods: {
+    test(){
+     let resset=111
+     let arr = [1,2,34,4]
+     console.log(...arr)
+    //  console.log(data)
     },
-    data() {
-      return {
-        todoData: ['todo1', 'todo2', 'todo3'],
-        content: ''
-      }
-    },
-    computed: {},
-    watch: {},
-    methods: {
-      addTodo() {
-        if (this.content === '') return
+    addTodo() {
+      if (this.content === '') return
 
-        this.todoData.push(this.content)
-        this.content = ''
-      }
-    },
-    created() {
-      console.log(1111111111111111)
-      console.log(img)
-      console.log(JSON)
-    },
-    //生命周期 - 挂载完成（可以访问DOM元素）
-    mounted() {},
-    activated() {} //如果页面有keep-alive缓存功能，这个函数会触发
+      this.todoData.push(this.content)
+      this.content = ''
+    }
   }
+}
 </script>
 
+<style lang="stylus" scoped>
 
-<style lang="scss">
-  /* 定义变量与值 */
-  $bgcolor: lightblue;
-  $textcolor: darkblue;
-  $fontsize: 18px;
+</style>-->
 
-  /* 使用变量 */
-  body {
-    background-color: $bgcolor;
-    color: $textcolor;
-    font-size: $fontsize;
+<template>
+  <div>
+    this is App
+    <h1>hahhahahha</h1>
+    <img src="./assets/images/2.png"/>
+  </div>
+</template>
+
+<script>
+import img from "./assets/images/2.png";
+import data from './assets/data/test.xml'
+import "./assets/styles/resset.css";
+export default {
+  name: "App",
+  mounted(){
+   console.log(1111111)
+   this.test()
+  },
+  methods: {
+    test(){
+     let resset=111
+     let arr = [1,2,34,4]
+     console.log(...arr)
+     console.log(data)
+    },
   }
+};
+</script>
+
+<style lang="scss" scoped>
+h1 {
+  color: blue;
+}
 </style>
