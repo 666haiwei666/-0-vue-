@@ -49,28 +49,32 @@ export default {
   <div>
     this is App
     <h1>hahhahahha</h1>
-    <img src="./assets/images/2.png"/>
+    <img src="./assets/images/2.png" />
   </div>
 </template>
 
 <script>
 import img from "./assets/images/2.png";
-import data from './assets/data/test.xml'
+import data from "./assets/data/test.xml";
 import "./assets/styles/resset.css";
+import { cube } from "./math.js";
+import "./first.js";
+import "./seconds.js";
 export default {
   name: "App",
-  mounted(){
-   console.log(1111111)
-   this.test()
+  mounted() {
+    console.log(1111111);
+    this.test();
+    console.log(cube(27));
   },
   methods: {
-    test(){
-     let resset=111
-     let arr = [1,2,34,4]
-     console.log(...arr)
-     console.log(data)
+    test() {
+      let resset = 111;
+      let arr = [1, 2, 34, 4];
+      console.log(...arr);
+      console.log(data);
     },
-  }
+  },
 };
 </script>
 

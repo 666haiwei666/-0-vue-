@@ -5,20 +5,25 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const {
+  CleanWebpackPlugin
+} = require("clean-webpack-plugin");
 
 module.exports = {
   // 打包的入口
-  entry: "./src/main.js",
+  entry: {
+    main: "./src/main.js",
+    first: './src/first.js',
+    second: './src/seconds.js',
+  },
   // 打包的出口
   output: {
-    filename: "bundle.js",
+    filename: '[name].js',
     path: path.resolve(__dirname, "..", "dist"),
   },
   devtool: "inline-source-map",
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: "vue-loader",
       },
@@ -35,8 +40,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          {
+        use: [{
             loader: MiniCssExtractPlugin.loader,
             options: {
               // 这里可以指定一个 publicPath
@@ -122,7 +126,11 @@ module.exports = {
           name: "fonts/[name]_[hash:7].[ext]",
         },
       },
-      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
+      },
     ],
   },
   plugins: [
