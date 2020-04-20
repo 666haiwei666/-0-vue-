@@ -55,14 +55,14 @@ export default {
 </template>
 
 <script>
-import img from "./src/assets/images/2.png";
-import data from "./src/assets/data/test.xml";
-import "./src/assets/styles/resset.css";
-import { cube } from "./src/math.js";
-import "./src/first.js";
-import "./src/seconds.js";
+// import img from './src/assets/images/2.png';
+import data from './src/assets/data/test.xml';
+import './src/assets/styles/resset.css';
+import { cube } from './src/math.js';
+import './src/first.js';
+import './src/seconds.js';
 export default {
-  name: "App",
+  name: 'App',
   mounted() {
     console.log(1111111);
     this.test();
@@ -70,8 +70,8 @@ export default {
   },
   methods: {
     test() {
-      let resset = 111;
-      let arr = [1, 2, 34, 4];
+      // const resset = 111;
+      const arr = [1, 2, 34, 4];
       console.log(...arr);
       console.log(data);
     },

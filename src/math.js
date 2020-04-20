@@ -1,4 +1,5 @@
 export function square(x) {
+  console.log(2)
   return x * x;
 }
 

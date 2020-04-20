@@ -18,7 +18,7 @@ module.exports = {
   },
   // 打包的出口
   output: {
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, "..", "dist"),
   },
   devtool: "inline-source-map",
@@ -30,10 +30,20 @@ module.exports = {
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
-        enforce: 'pre',
+        enforce: 'pre',  // 优先执行
         include: [resolve('src'), resolve('test')],
         options: {
           formatter: require('eslint-friendly-formatter')
+        }
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/, // 不检测node-modules
+        loader: "babel-loader",
+        options:{
+          //开启babel 缓存
+          // 第二次构建会读取之前的缓存 
+          cacheDirectory:true
         }
       },
       {
@@ -129,23 +139,27 @@ module.exports = {
         use: ["xml-loader"],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+      test: /\.(woff|woff2|eot|ttf|otf)$/,
         loader: "file-loader",
         options: {
-          name: "fonts/[name]_[hash:7].[ext]",
+          name: "fonts/[name].[hash:7].[ext]",
         },
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "babel-loader"
-      },
+      }
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: "./index.html",
+      minify: {
+        // 移除注释
+        removeComments: true,
+        // 移除空格
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
     }),
     new MiniCssExtractPlugin({
       filename: "assets/main.css",

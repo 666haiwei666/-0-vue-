@@ -3,8 +3,10 @@ const baseConfig = require("./webpack.base.js");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const webpack = require("webpack");
 const packagejson = require('..//package.json')
+process.env.NODE_ENV='production'
 const prodConfig = {
   // 模式
+  // 生产环境会自动压缩js代码（会自动加载一个插件）
   mode: "production",
   entry: {
     vendor: Object.keys(packagejson.dependencies) //获取生产环境依赖的库

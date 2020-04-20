@@ -2,6 +2,7 @@ const webpack = require('webpack')
 
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.js')
+process.env.NODE_ENV='development'
 const devConfig = {
   // 模式
   mode: 'development',
@@ -17,6 +18,8 @@ const devConfig = {
     port:3000
   },
   // 插件
+
+  // 模块热替换
   plugins: [new webpack.HotModuleReplacementPlugin()]
 }
 
