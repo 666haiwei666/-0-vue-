@@ -12,7 +12,7 @@ const {
 module.exports = {
   // 打包的入口
   entry: {
-    main: "./main.js",   //以test目录为路径
+    main: "./main.js", //以test目录为路径
     first: './src/first.js',
     second: './src/seconds.js',
   },
@@ -26,6 +26,15 @@ module.exports = {
     rules: [{
         test: /\.vue$/,
         loader: "vue-loader",
+      },
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('src'), resolve('test')],
+        options: {
+          formatter: require('eslint-friendly-formatter')
+        }
       },
       {
         test: /\.(jpg|jpeg|png|svg)$/,
@@ -165,3 +174,6 @@ module.exports = {
     },
   },
 };
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
