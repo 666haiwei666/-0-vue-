@@ -47,9 +47,10 @@ export default {
 
 <template>
   <div>
-    this is App
+    <!-- this is App
     <h1>hahhahahha</h1>
-    <img src="./src/assets/images/2.png" />
+    <img src="./src/assets/images/2.png" /> -->
+    <router-view></router-view>
   </div>
 </template>
 
