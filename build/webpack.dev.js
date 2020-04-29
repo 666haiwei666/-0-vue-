@@ -1,11 +1,15 @@
 const webpack = require('webpack')
-
+const path = require("path");
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.js')
 process.env.NODE_ENV='development'
 const devConfig = {
   // 模式
   mode: 'development',
+  output: {
+    filename: '[name].[hash].js',
+    path: path.resolve(__dirname, "..", "dist"),
+  },
   devtool: 'cheap-module-eval-source-map',
   devServer: {
     // 指定服务器根目录

@@ -11,3 +11,7 @@
       "not op_mini"
     ]
   } -->
+
+  // tree_shaking  去除无用代码
+
+  // chunkhash无法和热更新一起使用

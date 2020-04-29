@@ -16,11 +16,11 @@ module.exports = {
     first: './src/first.js',
     second: './src/seconds.js',
   },
-  // 打包的出口
-  output: {
-    filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, "..", "dist"),
-  },
+  // // 打包的出口
+  // output: {
+  //   filename: '[name].[hash].js',
+  //   path: path.resolve(__dirname, "..", "dist"),
+  // },
   devtool: "inline-source-map",
   module: {
     rules: [{
@@ -33,6 +33,7 @@ module.exports = {
         enforce: 'pre',  // 优先执行
         include: [resolve('src'), resolve('test')],
         options: {
+          limit: 10000,
           formatter: require('eslint-friendly-formatter')
         }
       },
@@ -43,7 +44,8 @@ module.exports = {
         options:{
           //开启babel 缓存
           // 第二次构建会读取之前的缓存 
-          cacheDirectory:true
+          cacheDirectory:true,
+          // limit: 10000,
         }
       },
       {
@@ -65,6 +67,7 @@ module.exports = {
               // 这里可以指定一个 publicPath
               // 默认使用 webpackOptions.output中的publicPath
               publicPath: "../",
+              limit: 10000,
             },
           },
           "css-loader",
@@ -142,6 +145,7 @@ module.exports = {
       test: /\.(woff|woff2|eot|ttf|otf)$/,
         loader: "file-loader",
         options: {
+          limit: 10000,
           name: "fonts/[name].[hash:7].[ext]",
         },
       }

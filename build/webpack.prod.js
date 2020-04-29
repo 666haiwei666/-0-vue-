@@ -1,8 +1,10 @@
 const merge = require("webpack-merge");
 const baseConfig = require("./webpack.base.js");
 const ManifestPlugin = require("webpack-manifest-plugin");
+const uglify = require('uglifyjs-webpack-plugin');
 const webpack = require("webpack");
 const packagejson = require('..//package.json')
+const path = require("path");
 process.env.NODE_ENV='production'
 const prodConfig = {
   // 模式
@@ -11,7 +13,12 @@ const prodConfig = {
   entry: {
     vendor: Object.keys(packagejson.dependencies) //获取生产环境依赖的库
   },
+  output: {
+    filename: '[name].[chunkhash].js',
+    path: path.resolve(__dirname, "..", "dist"),
+  },
   plugins: [
+    new uglify(),
     new ManifestPlugin(),
     new webpack.optimize.SplitChunksPlugin({
       cacheGroups: {

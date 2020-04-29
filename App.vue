@@ -56,9 +56,9 @@ export default {
 
 <script>
 // import img from './src/assets/images/2.png';
-import data from './src/assets/data/test.xml';
+// import data from './src/assets/data/test.xml';
 import './src/assets/styles/resset.css';
-import { cube } from './src/math.js';
+// import { cube } from './src/math.js';
 import './src/first.js';
 import './src/seconds.js';
 export default {
@@ -66,14 +66,14 @@ export default {
   mounted() {
     console.log(1111111);
     this.test();
-    console.log(cube(27));
+    // console.log(cube(27));
   },
   methods: {
     test() {
       // const resset = 111;
       const arr = [1, 2, 34, 4];
       console.log(...arr);
-      console.log(data);
+      // console.log(data);
     },
   },
 };
